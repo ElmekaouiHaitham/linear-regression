@@ -17,8 +17,8 @@ class LinearRegression:
         for _ in range(self.n_iters):
             y_predicted = np.dot(X, self.weights) + self.bias
             gradient = self.gradient(X, y, y_predicted)
-            self.weights -= self.lr * gradient
-            self.bias -= self.lr * np.sum(gradient * X)
+            self.weights -= self.lr * gradient[0]
+            self.bias -= self.lr * gradient[1]
         return self
 
     def gradient(self, X, y, y_predicted):
@@ -37,11 +37,11 @@ class LinearRegression:
         return linear_model
 
 X = np.linspace(-40, 40, 10000).reshape(-1, 1)  # 100 points between -2 and 2
-y = X.T.reshape(-1)
+y = X.T.reshape(-1) + 5
 
 
 model = LinearRegression()
 
 model.fit(X,y)
 
-print(model.weights)
+print(model.bias)
