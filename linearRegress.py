@@ -12,16 +12,20 @@ class LinearRegression:
         # initialize the weights and bias
         n_samples, n_features = X.shape
         self.weights = np.random.randn(n_features)
-        self.bias = np.random.randint(1)
+        self.bias = np.random.randn()
         # Gradient Descent
         for _ in range(self.n_iters):
+            print(f"step{_}")
+            print("weights: ", self.weights)
             y_predicted = np.dot(X, self.weights) + self.bias
-            gradient = self.gradient(X, y, y_predicted)
+            gradient = self.__gradient(X, y, y_predicted)
+            print("gradient:" , self.lr * gradient[0])
             self.weights -= self.lr * gradient[0]
             self.bias -= self.lr * gradient[1]
         return self
 
-    def gradient(self, X, y, y_predicted):
+    def __gradient(self, X, y, y_predicted):
+        print((y_predicted - y))
         n_samples, n_features = X.shape
         # Calculate the gradient of the cost function with respect to the weights and bias
         gradient_weights = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
@@ -36,12 +40,7 @@ class LinearRegression:
         linear_model = np.dot(X, self.weights) + self.bias
         return linear_model
 
-X = np.linspace(-40, 40, 10000).reshape(-1, 1)  # 100 points between -2 and 2
-y = X.T.reshape(-1) + 5
+def MSE(y_pred, y_true):
+    return np.mean((y_true - y_pred) ** 2)
 
-
-model = LinearRegression()
-
-model.fit(X,y)
-
-print(model.bias)
+# TODO: add regularization terms and early stopping
