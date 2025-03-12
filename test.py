@@ -5,12 +5,7 @@ from sklearn.linear_model import SGDRegressor
 from sklearn.preprocessing import StandardScaler
 
 import numpy as np
-# X, y = fetch_california_housing(return_X_y=True)
-X = np.linspace(0, 1000, 100000).reshape(-1, 1) # 100,000 points, one feature
-X = np.hstack([X, X])  # Adding a second feature (e.g., X²)
-
-# Generate y
-y = X[:, 0] # Only using the first feature + bias term
+X, y = fetch_california_housing(return_X_y=True)
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
