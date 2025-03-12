@@ -11,11 +11,11 @@ class LinearRegression:
     def fit(self, X, y):
         # initialize the weights and bias
         n_samples, n_features = X.shape
-        self.weights = np.random.randn(n_features)
+        self.weights = np.zeros(n_features)
         self.bias = np.random.randn()
         # Gradient Descent
         for _ in range(self.n_iters):
-            print(f"step{_}")
+            print(f"step{_}:")
             print("weights: ", self.weights)
             y_predicted = np.dot(X, self.weights) + self.bias
             gradient = self.__gradient(X, y, y_predicted)
@@ -25,7 +25,10 @@ class LinearRegression:
         return self
 
     def __gradient(self, X, y, y_predicted):
-        print((y_predicted - y))
+        print("y_pred: ", y_predicted)
+        print("y: ", y)
+        print("X: ", X)
+        print('error: ', y_predicted - y)
         n_samples, n_features = X.shape
         # Calculate the gradient of the cost function with respect to the weights and bias
         gradient_weights = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
