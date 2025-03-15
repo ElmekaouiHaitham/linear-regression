@@ -35,6 +35,7 @@ class LinearRegression:
             print("loss= ", loss)
             if prv_loss is not None and abs(loss - prv_loss) < self.tol:
                 break
+            prv_loss = loss
         return self
 
     def __gradient(self, X, y, y_predicted):
