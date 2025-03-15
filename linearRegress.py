@@ -60,4 +60,3 @@ class LinearRegression:
 def MSE(y_pred, y_true):
     return np.mean((y_true - y_pred) ** 2)
 
-# TODO: add regularization terms and early stopping
