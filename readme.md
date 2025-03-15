@@ -13,8 +13,8 @@ This project implements **Linear Regression** from scratch using NumPy. It suppo
 ## Implementation Details
 - **Loss Function**:
   $$\text{MSE Loss} = \frac{1}{n} \sum (y - \hat{y})^2$$
-  - With **L1 Regularization**: $$ \text{Loss} += \alpha \sum |w| $$
-  - With **L2 Regularization**: $$ \text{Loss} += \alpha \sum w^2 $$
+  - With **L1 Regularization**: $$\text{Loss} += \alpha \sum |w|$$
+  - With **L2 Regularization**: $$\text{Loss} += \alpha \sum w^2$$
 
 - **Gradient Calculation**:
   - For **weights**:
