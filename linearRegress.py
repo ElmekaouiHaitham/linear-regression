@@ -3,14 +3,20 @@ import numpy as np
 # y and one or more independent variables X.
 
 class LinearRegression:
-    def __init__(self, learning_rate=0.001, n_iters=1000, tol=1e-3):
+    def __init__(self, learning_rate=0.001, n_iters=1000, tol=0.001, penalty = None):
         self.lr = learning_rate
         self.n_iters = n_iters
         self.tol = tol
         self.weights = None
+        self.penalty = penalty
 
     def loss(self, y, y_pred):
-        return np.mean((y - y_pred) ** 2)
+        loss = np.mean((y - y_pred) ** 2)
+        if self.penalty == 'l1':
+            loss += self.lr * np.sum(np.abs(self.weights))
+        elif self.penalty == 'l2':
+            loss += self.lr * np.sum(self.weights ** 2)
+        return loss
 
     def fit(self, X, y):
         # initialize the weights and bias
@@ -21,10 +27,8 @@ class LinearRegression:
         # Gradient Descent
         for _ in range(self.n_iters):
             print(f"step{_}:")
-            print("weights: ", self.weights)
             y_predicted = self.predict(X)
             gradient = self.__gradient(X, y, y_predicted)
-            print("gradient:" , self.lr * gradient[0])
             self.weights -= self.lr * gradient[0]
             self.bias -= self.lr * gradient[1]
             loss = self.loss(y, self.predict(X))
@@ -34,13 +38,13 @@ class LinearRegression:
         return self
 
     def __gradient(self, X, y, y_predicted):
-        print("y_pred: ", y_predicted)
-        print("y: ", y)
-        print("X: ", X)
-        print('error: ', y_predicted - y)
         n_samples, _ = X.shape
         # Calculate the gradient of the cost function with respect to the weights and bias
         gradient_weights = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
+        if self.penalty == 'l1':
+            gradient_weights += self.lr * np.sign(self.weights)
+        elif self.penalty == 'l2':
+            gradient_weights += self.lr * 2 * self.weights
         gradient_bias = (1 / n_samples) * np.sum(y_predicted - y)
         return gradient_weights, gradient_bias
 
